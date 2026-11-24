@@ -135,8 +135,9 @@ class Combo(Producto):
         if producto.contiene(self):
             raise ValueError("Un combo no puede contenerse a sí mismo (ni directa ni indirectamente).")
         self.__productos.append(producto)
-        self._precio = self.calcular_precio() if len(self.__productos) >= 1 else 1.0
-
+        if len(self.__productos) >= config.MIN_PRODUCTOS_COMBO:
+            self._precio = self.calcular_precio()
+            
     def contiene(self, objetivo: Producto) -> bool:
         if self is objetivo:
             return True
